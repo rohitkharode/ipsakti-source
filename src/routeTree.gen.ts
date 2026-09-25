@@ -8,263 +8,263 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as CasesRouteImport } from './routes/cases'
-import { Route as EvidenceRouteImport } from './routes/evidence'
-import { Route as HelpRouteImport } from './routes/help'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as SourcesRouteImport } from './routes/sources'
-import { Route as AnalysisNewRouteImport } from './routes/analysis.new'
-import { Route as EvidenceIdRouteImport } from './routes/evidence.$id'
-import { Route as AnalysisIdIndexRouteImport } from './routes/analysis.$id.index'
-import { Route as AnalysisIdChecklistRouteImport } from './routes/analysis.$id.checklist'
+import { Route as rootRouteImport } from "./routes/__root";
+import { Route as IndexRouteImport } from "./routes/index";
+import { Route as CasesRouteImport } from "./routes/cases";
+import { Route as EvidenceRouteImport } from "./routes/evidence";
+import { Route as HelpRouteImport } from "./routes/help";
+import { Route as LoginRouteImport } from "./routes/login";
+import { Route as SettingsRouteImport } from "./routes/settings";
+import { Route as SourcesRouteImport } from "./routes/sources";
+import { Route as AnalysisNewRouteImport } from "./routes/analysis.new";
+import { Route as EvidenceIdRouteImport } from "./routes/evidence.$id";
+import { Route as AnalysisIdIndexRouteImport } from "./routes/analysis.$id.index";
+import { Route as AnalysisIdChecklistRouteImport } from "./routes/analysis.$id.checklist";
 
 const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const CasesRoute = CasesRouteImport.update({
-  id: '/cases',
-  path: '/cases',
+  id: "/cases",
+  path: "/cases",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const EvidenceRoute = EvidenceRouteImport.update({
-  id: '/evidence',
-  path: '/evidence',
+  id: "/evidence",
+  path: "/evidence",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const HelpRoute = HelpRouteImport.update({
-  id: '/help',
-  path: '/help',
+  id: "/help",
+  path: "/help",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+  id: "/login",
+  path: "/login",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const SettingsRoute = SettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
+  id: "/settings",
+  path: "/settings",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const SourcesRoute = SourcesRouteImport.update({
-  id: '/sources',
-  path: '/sources',
+  id: "/sources",
+  path: "/sources",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const AnalysisNewRoute = AnalysisNewRouteImport.update({
-  id: '/analysis/new',
-  path: '/analysis/new',
+  id: "/analysis/new",
+  path: "/analysis/new",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const EvidenceIdRoute = EvidenceIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
+  id: "/$id",
+  path: "/$id",
   getParentRoute: () => EvidenceRoute,
-} as any)
+} as any);
 const AnalysisIdIndexRoute = AnalysisIdIndexRouteImport.update({
-  id: '/analysis/$id/',
-  path: '/analysis/$id/',
+  id: "/analysis/$id/",
+  path: "/analysis/$id/",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const AnalysisIdChecklistRoute = AnalysisIdChecklistRouteImport.update({
-  id: '/analysis/$id/checklist',
-  path: '/analysis/$id/checklist',
+  id: "/analysis/$id/checklist",
+  path: "/analysis/$id/checklist",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/cases': typeof CasesRoute
-  '/evidence': typeof EvidenceRouteWithChildren
-  '/help': typeof HelpRoute
-  '/login': typeof LoginRoute
-  '/settings': typeof SettingsRoute
-  '/sources': typeof SourcesRoute
-  '/analysis/new': typeof AnalysisNewRoute
-  '/evidence/$id': typeof EvidenceIdRoute
-  '/analysis/$id/checklist': typeof AnalysisIdChecklistRoute
-  '/analysis/$id/': typeof AnalysisIdIndexRoute
+  "/": typeof IndexRoute;
+  "/cases": typeof CasesRoute;
+  "/evidence": typeof EvidenceRouteWithChildren;
+  "/help": typeof HelpRoute;
+  "/login": typeof LoginRoute;
+  "/settings": typeof SettingsRoute;
+  "/sources": typeof SourcesRoute;
+  "/analysis/new": typeof AnalysisNewRoute;
+  "/evidence/$id": typeof EvidenceIdRoute;
+  "/analysis/$id/checklist": typeof AnalysisIdChecklistRoute;
+  "/analysis/$id/": typeof AnalysisIdIndexRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/cases': typeof CasesRoute
-  '/evidence': typeof EvidenceRouteWithChildren
-  '/help': typeof HelpRoute
-  '/login': typeof LoginRoute
-  '/settings': typeof SettingsRoute
-  '/sources': typeof SourcesRoute
-  '/analysis/new': typeof AnalysisNewRoute
-  '/evidence/$id': typeof EvidenceIdRoute
-  '/analysis/$id/checklist': typeof AnalysisIdChecklistRoute
-  '/analysis/$id': typeof AnalysisIdIndexRoute
+  "/": typeof IndexRoute;
+  "/cases": typeof CasesRoute;
+  "/evidence": typeof EvidenceRouteWithChildren;
+  "/help": typeof HelpRoute;
+  "/login": typeof LoginRoute;
+  "/settings": typeof SettingsRoute;
+  "/sources": typeof SourcesRoute;
+  "/analysis/new": typeof AnalysisNewRoute;
+  "/evidence/$id": typeof EvidenceIdRoute;
+  "/analysis/$id/checklist": typeof AnalysisIdChecklistRoute;
+  "/analysis/$id": typeof AnalysisIdIndexRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/cases': typeof CasesRoute
-  '/evidence': typeof EvidenceRouteWithChildren
-  '/help': typeof HelpRoute
-  '/login': typeof LoginRoute
-  '/settings': typeof SettingsRoute
-  '/sources': typeof SourcesRoute
-  '/analysis/new': typeof AnalysisNewRoute
-  '/evidence/$id': typeof EvidenceIdRoute
-  '/analysis/$id/checklist': typeof AnalysisIdChecklistRoute
-  '/analysis/$id/': typeof AnalysisIdIndexRoute
+  __root__: typeof rootRouteImport;
+  "/": typeof IndexRoute;
+  "/cases": typeof CasesRoute;
+  "/evidence": typeof EvidenceRouteWithChildren;
+  "/help": typeof HelpRoute;
+  "/login": typeof LoginRoute;
+  "/settings": typeof SettingsRoute;
+  "/sources": typeof SourcesRoute;
+  "/analysis/new": typeof AnalysisNewRoute;
+  "/evidence/$id": typeof EvidenceIdRoute;
+  "/analysis/$id/checklist": typeof AnalysisIdChecklistRoute;
+  "/analysis/$id/": typeof AnalysisIdIndexRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
-    | '/'
-    | '/cases'
-    | '/evidence'
-    | '/help'
-    | '/login'
-    | '/settings'
-    | '/sources'
-    | '/analysis/new'
-    | '/evidence/$id'
-    | '/analysis/$id/checklist'
-    | '/analysis/$id/'
-  fileRoutesByTo: FileRoutesByTo
+    | "/"
+    | "/cases"
+    | "/evidence"
+    | "/help"
+    | "/login"
+    | "/settings"
+    | "/sources"
+    | "/analysis/new"
+    | "/evidence/$id"
+    | "/analysis/$id/checklist"
+    | "/analysis/$id/";
+  fileRoutesByTo: FileRoutesByTo;
   to:
-    | '/'
-    | '/cases'
-    | '/evidence'
-    | '/help'
-    | '/login'
-    | '/settings'
-    | '/sources'
-    | '/analysis/new'
-    | '/evidence/$id'
-    | '/analysis/$id/checklist'
-    | '/analysis/$id'
+    | "/"
+    | "/cases"
+    | "/evidence"
+    | "/help"
+    | "/login"
+    | "/settings"
+    | "/sources"
+    | "/analysis/new"
+    | "/evidence/$id"
+    | "/analysis/$id/checklist"
+    | "/analysis/$id";
   id:
-    | '__root__'
-    | '/'
-    | '/cases'
-    | '/evidence'
-    | '/help'
-    | '/login'
-    | '/settings'
-    | '/sources'
-    | '/analysis/new'
-    | '/evidence/$id'
-    | '/analysis/$id/checklist'
-    | '/analysis/$id/'
-  fileRoutesById: FileRoutesById
+    | "__root__"
+    | "/"
+    | "/cases"
+    | "/evidence"
+    | "/help"
+    | "/login"
+    | "/settings"
+    | "/sources"
+    | "/analysis/new"
+    | "/evidence/$id"
+    | "/analysis/$id/checklist"
+    | "/analysis/$id/";
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  CasesRoute: typeof CasesRoute
-  EvidenceRoute: typeof EvidenceRouteWithChildren
-  HelpRoute: typeof HelpRoute
-  LoginRoute: typeof LoginRoute
-  SettingsRoute: typeof SettingsRoute
-  SourcesRoute: typeof SourcesRoute
-  AnalysisNewRoute: typeof AnalysisNewRoute
-  AnalysisIdChecklistRoute: typeof AnalysisIdChecklistRoute
-  AnalysisIdIndexRoute: typeof AnalysisIdIndexRoute
+  IndexRoute: typeof IndexRoute;
+  CasesRoute: typeof CasesRoute;
+  EvidenceRoute: typeof EvidenceRouteWithChildren;
+  HelpRoute: typeof HelpRoute;
+  LoginRoute: typeof LoginRoute;
+  SettingsRoute: typeof SettingsRoute;
+  SourcesRoute: typeof SourcesRoute;
+  AnalysisNewRoute: typeof AnalysisNewRoute;
+  AnalysisIdChecklistRoute: typeof AnalysisIdChecklistRoute;
+  AnalysisIdIndexRoute: typeof AnalysisIdIndexRoute;
 }
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cases': {
-      id: '/cases'
-      path: '/cases'
-      fullPath: '/cases'
-      preLoaderRoute: typeof CasesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/evidence': {
-      id: '/evidence'
-      path: '/evidence'
-      fullPath: '/evidence'
-      preLoaderRoute: typeof EvidenceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/help': {
-      id: '/help'
-      path: '/help'
-      fullPath: '/help'
-      preLoaderRoute: typeof HelpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sources': {
-      id: '/sources'
-      path: '/sources'
-      fullPath: '/sources'
-      preLoaderRoute: typeof SourcesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/analysis/new': {
-      id: '/analysis/new'
-      path: '/analysis/new'
-      fullPath: '/analysis/new'
-      preLoaderRoute: typeof AnalysisNewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/evidence/$id': {
-      id: '/evidence/$id'
-      path: '/$id'
-      fullPath: '/evidence/$id'
-      preLoaderRoute: typeof EvidenceIdRouteImport
-      parentRoute: typeof EvidenceRoute
-    }
-    '/analysis/$id/': {
-      id: '/analysis/$id/'
-      path: '/analysis/$id'
-      fullPath: '/analysis/$id/'
-      preLoaderRoute: typeof AnalysisIdIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/analysis/$id/checklist': {
-      id: '/analysis/$id/checklist'
-      path: '/analysis/$id/checklist'
-      fullPath: '/analysis/$id/checklist'
-      preLoaderRoute: typeof AnalysisIdChecklistRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/cases": {
+      id: "/cases";
+      path: "/cases";
+      fullPath: "/cases";
+      preLoaderRoute: typeof CasesRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/evidence": {
+      id: "/evidence";
+      path: "/evidence";
+      fullPath: "/evidence";
+      preLoaderRoute: typeof EvidenceRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/help": {
+      id: "/help";
+      path: "/help";
+      fullPath: "/help";
+      preLoaderRoute: typeof HelpRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/login": {
+      id: "/login";
+      path: "/login";
+      fullPath: "/login";
+      preLoaderRoute: typeof LoginRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/settings": {
+      id: "/settings";
+      path: "/settings";
+      fullPath: "/settings";
+      preLoaderRoute: typeof SettingsRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/sources": {
+      id: "/sources";
+      path: "/sources";
+      fullPath: "/sources";
+      preLoaderRoute: typeof SourcesRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/analysis/new": {
+      id: "/analysis/new";
+      path: "/analysis/new";
+      fullPath: "/analysis/new";
+      preLoaderRoute: typeof AnalysisNewRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/evidence/$id": {
+      id: "/evidence/$id";
+      path: "/$id";
+      fullPath: "/evidence/$id";
+      preLoaderRoute: typeof EvidenceIdRouteImport;
+      parentRoute: typeof EvidenceRoute;
+    };
+    "/analysis/$id/": {
+      id: "/analysis/$id/";
+      path: "/analysis/$id";
+      fullPath: "/analysis/$id/";
+      preLoaderRoute: typeof AnalysisIdIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/analysis/$id/checklist": {
+      id: "/analysis/$id/checklist";
+      path: "/analysis/$id/checklist";
+      fullPath: "/analysis/$id/checklist";
+      preLoaderRoute: typeof AnalysisIdChecklistRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
   }
 }
 
 interface EvidenceRouteChildren {
-  EvidenceIdRoute: typeof EvidenceIdRoute
+  EvidenceIdRoute: typeof EvidenceIdRoute;
 }
 
 const EvidenceRouteChildren: EvidenceRouteChildren = {
   EvidenceIdRoute: EvidenceIdRoute,
-}
+};
 
 const EvidenceRouteWithChildren = EvidenceRoute._addFileChildren(
   EvidenceRouteChildren,
-)
+);
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -277,17 +277,17 @@ const rootRouteChildren: RootRouteChildren = {
   AnalysisNewRoute: AnalysisNewRoute,
   AnalysisIdChecklistRoute: AnalysisIdChecklistRoute,
   AnalysisIdIndexRoute: AnalysisIdIndexRoute,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
 
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
+import type { getRouter } from "./router.tsx";
+import type { startInstance } from "./start.ts";
+declare module "@tanstack/react-start" {
   interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+    ssr: true;
+    router: Awaited<ReturnType<typeof getRouter>>;
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>;
   }
 }

@@ -22,8 +22,16 @@ const aliases: Record<string, MarketCode> = {
   global: "GLOBAL",
 };
 
-export function normalizeMarketCode(value: string | undefined | null): MarketCode {
-  return aliases[String(value ?? "").trim().toLowerCase()] ?? "GLOBAL";
+export function normalizeMarketCode(
+  value: string | undefined | null,
+): MarketCode {
+  return (
+    aliases[
+      String(value ?? "")
+        .trim()
+        .toLowerCase()
+    ] ?? "GLOBAL"
+  );
 }
 
 /** Values used by the seeded evidence corpus. */

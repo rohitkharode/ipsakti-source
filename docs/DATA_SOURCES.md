@@ -14,19 +14,19 @@ The corpus is curated and small by design: 11 sources, 11 documents and 16 evide
 
 ## Seeded sources
 
-| id | area |
-|---|---|
-| SRC-FSSAI-AAHARA | Ayurveda Aahara framework, India |
-| SRC-FSSAI-CLAIMS | Food claims and health claims, India |
-| SRC-API | Ayurvedic Pharmacopoeia monographs |
-| SRC-DCA-ASU | Drugs and Cosmetics Act, ASU provisions |
-| SRC-PATENTS-ACT | Patents Act |
-| SRC-TM-ACT | Trade Marks Act |
-| SRC-GI-ACT | Geographical Indications Act |
-| SRC-BDA | Biological Diversity Act / ABS |
-| SRC-TKDL | Traditional Knowledge Digital Library (descriptive entry only) |
-| SRC-EU-NOVEL | EU novel food regulation |
-| SRC-US-DSHEA | US dietary supplement framework |
+| id               | area                                                           |
+| ---------------- | -------------------------------------------------------------- |
+| SRC-FSSAI-AAHARA | Ayurveda Aahara framework, India                               |
+| SRC-FSSAI-CLAIMS | Food claims and health claims, India                           |
+| SRC-API          | Ayurvedic Pharmacopoeia monographs                             |
+| SRC-DCA-ASU      | Drugs and Cosmetics Act, ASU provisions                        |
+| SRC-PATENTS-ACT  | Patents Act                                                    |
+| SRC-TM-ACT       | Trade Marks Act                                                |
+| SRC-GI-ACT       | Geographical Indications Act                                   |
+| SRC-BDA          | Biological Diversity Act / ABS                                 |
+| SRC-TKDL         | Traditional Knowledge Digital Library (descriptive entry only) |
+| SRC-EU-NOVEL     | EU novel food regulation                                       |
+| SRC-US-DSHEA     | US dietary supplement framework                                |
 
 ## Ingestion
 

@@ -120,14 +120,14 @@ These are policy/unit tests. Live Supabase integration tests that create real us
 
 ## 9. Tests actually executed
 
-| COMMAND | RESULT | STATUS |
-|---|---|---|
-| `npm.cmd install` | Did not complete; no `node_modules` was created | NOT EXECUTED — ENVIRONMENT/NETWORK REQUIRED |
-| `npm.cmd run test` | `vitest` not found because dependencies were unavailable | NOT EXECUTED — DEPENDENCIES MISSING |
-| `npm.cmd run lint` | `eslint` not found because dependencies were unavailable | NOT EXECUTED — DEPENDENCIES MISSING |
-| `npm.cmd run build` | `vite` not found because dependencies were unavailable | NOT EXECUTED — DEPENDENCIES MISSING |
-| Live Supabase authentication tests | No configured runtime credentials/environment were available | NOT EXECUTED — ENVIRONMENT REQUIRED |
-| Browser create → refresh → reopen verification | No runnable application server was available | NOT EXECUTED — DEPENDENCIES/ENVIRONMENT REQUIRED |
+| COMMAND                                        | RESULT                                                       | STATUS                                           |
+| ---------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------ |
+| `npm.cmd install`                              | Did not complete; no `node_modules` was created              | NOT EXECUTED — ENVIRONMENT/NETWORK REQUIRED      |
+| `npm.cmd run test`                             | `vitest` not found because dependencies were unavailable     | NOT EXECUTED — DEPENDENCIES MISSING              |
+| `npm.cmd run lint`                             | `eslint` not found because dependencies were unavailable     | NOT EXECUTED — DEPENDENCIES MISSING              |
+| `npm.cmd run build`                            | `vite` not found because dependencies were unavailable       | NOT EXECUTED — DEPENDENCIES MISSING              |
+| Live Supabase authentication tests             | No configured runtime credentials/environment were available | NOT EXECUTED — ENVIRONMENT REQUIRED              |
+| Browser create → refresh → reopen verification | No runnable application server was available                 | NOT EXECUTED — DEPENDENCIES/ENVIRONMENT REQUIRED |
 
 Static verification was performed with repository inspection and targeted searches. Static verification is not a substitute for the commands above.
 

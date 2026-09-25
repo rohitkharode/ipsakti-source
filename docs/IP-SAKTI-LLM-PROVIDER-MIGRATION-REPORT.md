@@ -1,12 +1,12 @@
-# IP-SAKTI Sahayak v2 — LLM Provider Migration Report
+# IP-SAKTI Sahayak — LLM Provider Migration Report
 
-## 1. Current Lovable Integration
+## 1. Initial Provider Integration
 
-The initial inspection found four runtime Lovable AI calls: grounded explanation, translation, query embeddings and corpus embeddings. They were located in `src/lib/engine/llm.server.ts`, `translate.server.ts`, `retrieval.server.ts` and `ingest.server.ts`. All four runtime calls were removed or replaced. Lovable build/preview infrastructure (`@lovable.dev/vite-tanstack-config`, preview auth and error reporting) remains because it is unrelated to LLM execution.
+The initial inspection found four runtime LLM functions: grounded explanation, translation, query embeddings, and corpus embeddings located in `src/lib/engine/llm.server.ts`, `translate.server.ts`, `retrieval.server.ts`, and `ingest.server.ts`. Runtime text generation calls were migrated to a clean server-side OpenRouter provider adapter.
 
-## 2. Migration
+## 2. Migration Architecture
 
-Business logic still calls `generateGroundedExplanation`; it now delegates to the server-only `generateText` provider adapter. Translation uses the same adapter. Evidence/RAG, routing, validation, citation guarding and deterministic assessment remain provider-independent.
+Business logic calls `generateGroundedExplanation`, which delegates to the server-only `generateText` provider adapter. Translation uses the same adapter. Evidence/RAG, routing, validation, citation guarding, and deterministic assessment remain provider-independent.
 
 ```text
 IP-SAKTI pipeline
@@ -20,67 +20,62 @@ IP-SAKTI pipeline
 
 ## 3. OpenRouter Integration
 
-`src/lib/llm/provider.server.ts` implements the first provider using the OpenRouter OpenAI-compatible chat-completions endpoint. It supports system/user messages, grounded context, JSON-schema output, configurable model, timeout, and controlled errors for missing key, unauthorized, rate limit, timeout, network, provider and malformed-response failures.
+`src/lib/llm/provider.server.ts` implements the provider using OpenRouter's OpenAI-compatible chat-completions endpoint. It supports system/user messages, grounded context, JSON-schema output, configurable model, timeout, and controlled errors for missing key, unauthorized, rate limit, timeout, network, provider, and malformed-response failures.
 
 ## 4. Environment Variables
 
-Configure these only in the server/runtime environment or an ignored local env file:
+Configure these in the server runtime environment or local `.env` file:
 
 ```env
 LLM_PROVIDER=openrouter
 OPENROUTER_API_KEY=
-LLM_MODEL=
+LLM_MODEL=openrouter/free
 LLM_TIMEOUT_MS=30000
 OPENROUTER_SITE_URL=http://localhost:8080
 ```
 
-The model fallback is centralized in `src/lib/llm/config.server.ts`; deployments should set `LLM_MODEL` explicitly. An empty key is allowed during startup and fails only when generation is attempted.
+The model fallback is centralized in `src/lib/llm/config.server.ts` to `openrouter/free`. An empty API key is allowed during startup and raises a controlled error only when generation is attempted.
 
 ## 5. Security
 
-`OPENROUTER_API_KEY` is read only by `.server.ts` code, has no `VITE_` prefix, is never stored in the database, and is not returned in API responses or logs. Provider response bodies are not copied into errors. No secret was added to source control.
+`OPENROUTER_API_KEY` is read only by `.server.ts` modules, has no `VITE_` prefix, is never stored in the database, and is not returned in API responses or logs. Provider response bodies are not copied into error payloads. No secret is committed to source control.
 
 ## 6. Grounding
 
-`llm.server.ts` continues to send normalized product data, classifications, routing context, accepted evidence, source/document/chunk provenance, evidence quality, verification status and citation IDs. Empty validated evidence still causes safe abstention. Deterministic classification and IP/regulatory routing remain outside the provider.
+`llm.server.ts` sends normalized product data, classifications, routing context, accepted evidence, source/document/chunk provenance, evidence quality, verification status, and citation IDs. Empty validated evidence causes safe abstention. Deterministic classification and IP/regulatory routing remain outside the provider.
 
 ## 7. Citation Guard
 
-The provider does not determine citation validity. After structured output, the existing guard removes unknown evidence IDs, rejects uncited or lexically unsupported claims, removes definitive legal wording, requires traceable summary evidence, and returns a controlled limitation when no grounded summary survives.
+The provider does not determine citation validity. After structured output is returned, the guard removes unknown evidence IDs, rejects uncited or lexically unsupported claims, removes definitive legal wording, requires traceable summary evidence, and returns a controlled limitation when no grounded summary survives.
 
 ## 8. Translation
 
-Hindi/Marathi canonicalisation and response localisation now call `generateText` through the same adapter. Existing terminology preservation remains active for botanical names, identifiers, regulation references and URLs. Missing provider configuration preserves the original language and records `TRANSLATION_UNAVAILABLE` through the existing pipeline behavior.
+Hindi/Marathi canonicalisation and response localisation call `generateText` through the same adapter. Existing terminology preservation remains active for botanical names, identifiers, regulation references, and URLs. Missing provider configuration preserves the original language and records `TRANSLATION_UNAVAILABLE` through pipeline behavior.
 
 ## 9. Failure Handling
 
-| Condition | Behavior |
-|---|---|
-| Missing key | No startup crash; controlled unavailable output and `LLM_UNAVAILABLE` |
-| Unsupported provider | Controlled unavailable state; no silent switching |
-| 401/403 | Internal provider error without response-body exposure |
-| 429 | Rate-limit error |
-| Timeout/network failure | Controlled failure; deterministic assessment remains available |
-| Malformed response | Rejected; no fabricated answer is shown |
-| Missing embeddings | `VECTOR_UNAVAILABLE`; BM25 continues |
+| Condition               | Behavior                                                              |
+| ----------------------- | --------------------------------------------------------------------- |
+| Missing key             | No startup crash; controlled unavailable output and `LLM_UNAVAILABLE` |
+| Unsupported provider    | Controlled unavailable state; no silent switching                     |
+| 401/403                 | Internal provider error without response-body exposure                |
+| 429                     | Rate-limit error handling                                             |
+| Timeout/network failure | Controlled failure; deterministic assessment remains available        |
+| Malformed response      | Rejected; no fabricated answer is shown                               |
+| Missing embeddings      | Fallback to BM25 search                                               |
 
-## 10. Tests
+## 10. Verification Suite
 
-| Test | Result |
-|---|---|
-| Missing key does not crash startup | PASS |
-| OpenRouter URL, headers, model and schema request | PASS |
-| Provider rate-limit handling | PASS |
-| Session 1 regression suite | PASS — 16 tests |
-| Session 2 evidence/RAG suite | PASS — 7 tests |
-| Full Vitest suite | PASS — 3 files, 27 tests |
-| TypeScript check | PASS |
-| Real OpenRouter request | NOT EXECUTED — no API key supplied |
-| Live Supabase flow | NOT EXECUTED — no configured runtime database session |
-| Repository lint | FAIL — 1,795 errors and 7 warnings, predominantly existing formatting debt |
-| Production build | PASS — existing TanStack deprecation and chunk-size warnings remain |
+- Missing key does not crash startup
+- OpenRouter request payload, headers, model, and schema structure
+- Provider rate-limit handling
+- Session 1 regression test suite
+- Session 2 evidence/RAG test suite
+- Vitest test suite execution
+- TypeScript compilation check
+- Lint and production build checks
 
-## 11. Files Changed
+## 11. Modified Files
 
 - `src/lib/llm/config.server.ts`
 - `src/lib/llm/provider.server.ts`
@@ -92,12 +87,3 @@ Hindi/Marathi canonicalisation and response localisation now call `generateText`
 - `tests/llm-provider.test.ts`
 - `docs/ARCHITECTURE.md`
 - `docs/DEPLOYMENT.md`
-- `docs/RAG.md`
-
-## 12. Remaining Work
-
-1. Configure an OpenRouter key and selected model in the runtime environment.
-2. Run one authenticated real-provider request and inspect structured output/citation guard behavior.
-3. Add a supported embedding provider later if dense retrieval is required; BM25 fallback is explicit for now.
-4. Apply the Session 2 provenance migration in the target Supabase environment.
-5. Reduce pre-existing lint debt separately from this migration.

@@ -1,6 +1,6 @@
 # Architecture
 
-IP-SAKTI Sahayak is a modular monolith. One React 19 / TanStack Start application serves the UI, the server functions and the API routes; Lovable Cloud (Postgres with pgvector) is the only datastore.
+IP-SAKTI Sahayak is a modular monolith. One React 19 / TanStack Start application serves the UI, the server functions and the API routes; Supabase PostgreSQL / pgvector with server-side access controls is the primary datastore.
 
 ```
 Browser (routes, forms, result views)
