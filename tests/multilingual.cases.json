@@ -1,0 +1,46 @@
+{
+  "purpose": "Intent preservation and retrieval correctness for the canonical-English layer. Fluency is not measured.",
+  "cases": [
+    {
+      "id": "ML-01",
+      "language": "en",
+      "input": "Ashwagandha water-soluble extract produced with a novel extraction process for daily wellness",
+      "expectedLanguage": "en",
+      "expectedTopics": ["ayurveda_aahara", "patent", "prior_art"],
+      "preserve": ["Withania somnifera"]
+    },
+    {
+      "id": "ML-02",
+      "language": "hi",
+      "input": "नई निष्कर्षण प्रक्रिया से बना अश्वगंधा (Withania somnifera) जल-घुलनशील अर्क, दैनिक स्वास्थ्य हेतु",
+      "expectedLanguage": "hi",
+      "expectedTopics": ["ayurveda_aahara", "patent", "prior_art"],
+      "preserve": ["Withania somnifera"]
+    },
+    {
+      "id": "ML-03",
+      "language": "mr",
+      "input": "पारंपरिक ग्रंथात वर्णन केलेले चूर्ण, आयुर्वेदिक औषध म्हणून विक्रीसाठी आहे",
+      "expectedLanguage": "mr",
+      "expectedTopics": ["classical_ayurveda", "licensing"],
+      "preserve": ["Section 3(p)"]
+    },
+    {
+      "id": "ML-04",
+      "language": "hi",
+      "input": "हमारा herbal beverage FSSAI Ayurveda Aahara Regulation 4 के अंतर्गत आता है या नहीं?",
+      "expectedLanguage": "hi",
+      "expectedTopics": ["ayurveda_aahara"],
+      "preserve": ["FSSAI", "Regulation 4"]
+    },
+    {
+      "id": "ML-05",
+      "language": "mr",
+      "input": "वन्य स्रोतातून गोळा केलेली वनस्पती वापरून बनवलेले उत्पादन निर्यात करायचे आहे",
+      "expectedLanguage": "mr",
+      "expectedTopics": ["abs", "export_market"],
+      "preserve": []
+    }
+  ],
+  "metrics": ["intent_preservation", "retrieval_overlap_with_english_query", "identifier_preservation"]
+}

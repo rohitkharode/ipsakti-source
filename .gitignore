@@ -1,0 +1,32 @@
+# Local environment files and secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Build and framework output
+dist/
+.output/
+.wrangler/
+.tanstack/
+.vite/
+
+# Test and coverage output
+coverage/
+playwright-report/
+test-results/
+
+# Local databases, logs, and OS/editor files
+*.log
+*.local
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/settings.json
+
+# Temporary files
+*.tmp
+*.temp

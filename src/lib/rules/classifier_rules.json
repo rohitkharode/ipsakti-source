@@ -1,0 +1,149 @@
+{
+  "version": "2026.09.1",
+  "dimensions": [
+    {
+      "id": "product_pathway",
+      "label": "Product pathway",
+      "default": "Needs review",
+      "rules": [
+        {
+          "value": "Ayurveda Aahara / food pathway",
+          "base": 0.55,
+          "any": ["beverage", "food", "drink", "snack", "powder mix", "aahara", "nutraceutical", "supplement", "juice", "tea", "confection"],
+          "boost": [
+            { "terms": ["wellness", "daily use", "general consumption"], "weight": 0.12 },
+            { "terms": ["ayurveda", "ayurvedic", "traditional"], "weight": 0.1 }
+          ],
+          "penalty": [{ "terms": ["treats", "cures", "therapy", "disease", "disorder"], "weight": 0.2 }],
+          "topics": ["Product pathway", "Claims", "Regulatory route"],
+          "rationale": "The described format and intended use align with a food presentation rather than a licensed medicine presentation."
+        },
+        {
+          "value": "Proprietary Ayurvedic medicine pathway",
+          "base": 0.5,
+          "any": ["tablet", "churna", "asava", "arishta", "syrup", "capsule", "medicine", "therapeutic", "treats", "cures", "disorder"],
+          "boost": [{ "terms": ["ayurveda", "ayurvedic", "classical text", "samhita"], "weight": 0.15 }],
+          "penalty": [{ "terms": ["beverage", "food", "snack"], "weight": 0.15 }],
+          "topics": ["Regulatory route", "Product pathway"],
+          "rationale": "Dosage form and claim wording point towards an Ayurvedic medicine presentation requiring a licensing assessment."
+        },
+        {
+          "value": "Classical Ayurveda formulation",
+          "base": 0.45,
+          "any": ["classical", "samhita", "as described in", "authoritative book", "unmodified", "traditional formulation"],
+          "boost": [{ "terms": ["charaka", "sushruta", "ashtanga", "bhaishajya"], "weight": 0.2 }],
+          "penalty": [{ "terms": ["novel", "modified", "standardized extract", "new process"], "weight": 0.25 }],
+          "topics": ["Preparation", "Ingredient identity"],
+          "rationale": "The preparation is described as following a classical formulation without modification."
+        },
+        {
+          "value": "Cosmetic / non-therapeutic pathway",
+          "base": 0.5,
+          "any": ["cream", "serum", "oil for skin", "shampoo", "cosmetic", "hair", "skin care", "lotion", "balm"],
+          "topics": ["Regulatory route", "Claims"],
+          "rationale": "External application and appearance-related use indicate a cosmetic pathway."
+        }
+      ]
+    },
+    {
+      "id": "claim_profile",
+      "label": "Claim profile",
+      "default": "Unclear",
+      "rules": [
+        {
+          "value": "Therapeutic / medicinal claim",
+          "base": 0.6,
+          "any": ["cure", "cures", "treat", "treats", "therapy", "therapeutic", "disease", "disorder", "heals", "remedy"],
+          "topics": ["Claims"],
+          "review": true,
+          "rationale": "Claim wording refers to treating or affecting a disease or disorder, which is restricted for food presentations."
+        },
+        {
+          "value": "Wellness / functional claim",
+          "base": 0.55,
+          "any": ["wellness", "supports", "vitality", "energy", "resilience", "stress", "immunity", "sleep", "stamina", "well-being"],
+          "topics": ["Claims"],
+          "rationale": "Claims are expressed as general wellness or functional support rather than disease treatment."
+        },
+        {
+          "value": "Traditional-use claim",
+          "base": 0.5,
+          "any": ["traditionally used", "traditional use", "ayurveda describes", "classically used"],
+          "topics": ["Claims", "Traditional knowledge"],
+          "rationale": "The submitted wording relies on traditional-use context."
+        },
+        {
+          "value": "Nutrition claim",
+          "base": 0.45,
+          "any": ["source of", "rich in", "protein", "vitamin", "mineral", "fibre", "fiber", "low sugar"],
+          "topics": ["Claims"],
+          "rationale": "Claims reference nutrient content and fall under nutrition-claim conditions."
+        },
+        {
+          "value": "Cosmetic claim",
+          "base": 0.45,
+          "any": ["glow", "hair fall", "skin tone", "anti-ageing", "moisturis", "complexion"],
+          "topics": ["Claims"],
+          "rationale": "Claims relate to appearance rather than internal function."
+        }
+      ]
+    },
+    {
+      "id": "innovation_profile",
+      "label": "Innovation profile",
+      "default": "Unknown",
+      "rules": [
+        {
+          "value": "Novel extraction process",
+          "base": 0.6,
+          "any": ["water-soluble extract", "water soluble", "novel extraction", "supercritical", "co2 extraction", "enzymatic extraction", "new extraction", "nano", "encapsulat", "spray dr"],
+          "topics": ["Preparation", "IP pathway"],
+          "review": true,
+          "rationale": "The described extraction differs from a classically described preparation and needs a process-focused prior-art assessment."
+        },
+        {
+          "value": "Novel process",
+          "base": 0.5,
+          "any": ["novel process", "new manufacturing", "continuous process", "fermentation process", "proprietary process"],
+          "topics": ["Preparation", "IP pathway"],
+          "rationale": "Manufacturing is described as differing from established practice."
+        },
+        {
+          "value": "Novel composition",
+          "base": 0.5,
+          "any": ["new combination", "novel composition", "not previously combined", "new ingredient"],
+          "topics": ["IP pathway", "Preparation"],
+          "rationale": "The composition is described as a new combination of ingredients."
+        },
+        {
+          "value": "Modified formulation",
+          "base": 0.45,
+          "any": ["standardized", "standardised", "modified", "changed ratio", "shelf-stable", "fortified", "concentrate"],
+          "topics": ["Preparation"],
+          "rationale": "A traditional preparation is presented with modified ratios, standardisation or format."
+        },
+        {
+          "value": "Traditional formulation",
+          "base": 0.4,
+          "any": ["as described in classical", "unmodified", "traditional method", "classical preparation"],
+          "topics": ["Preparation"],
+          "rationale": "The preparation follows a described traditional method."
+        }
+      ]
+    }
+  ],
+  "abs": {
+    "triggerTerms": ["extract", "root", "leaf", "bark", "seed", "herb", "botanical", "plant"],
+    "authority": "National Biodiversity Authority, with the relevant State Biodiversity Board where applicable"
+  },
+  "tk": {
+    "triggerTerms": ["ayurveda", "ayurvedic", "traditional", "classical", "ashwagandha", "brahmi", "turmeric", "neem", "tulsi", "amla"]
+  },
+  "markets": {
+    "IN": { "authority": "FSSAI, with Ayush licensing authorities where the product is presented as a medicine", "category": "Food / Ayurveda Aahara or ASU drug pathway" },
+    "EU": { "authority": "National competent authority of the member state of first placing", "category": "Food supplement, with novel-food screening" },
+    "US": { "authority": "U.S. Food and Drug Administration", "category": "Dietary supplement, with new dietary ingredient screening" },
+    "ASEAN": { "authority": "National regulator of the destination member state", "category": "Traditional medicine or health supplement pathway" },
+    "GLOBAL": { "authority": "Destination-market regulator", "category": "Category depends on destination market" }
+  }
+}
