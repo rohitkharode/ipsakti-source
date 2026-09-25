@@ -7,7 +7,10 @@ export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
       { title: "Sign in — IP-SAKTI" },
-      { name: "description", content: "Sign in to your IP-SAKTI research workspace." },
+      {
+        name: "description",
+        content: "Sign in to your IP-SAKTI research workspace.",
+      },
     ],
   }),
   component: LoginPage,
@@ -28,9 +31,10 @@ function LoginPage() {
     setError(null);
     setMessage(null);
 
-    const result = mode === "signin"
-      ? await supabase.auth.signInWithPassword({ email, password })
-      : await supabase.auth.signUp({ email, password });
+    const result =
+      mode === "signin"
+        ? await supabase.auth.signInWithPassword({ email, password })
+        : await supabase.auth.signUp({ email, password });
 
     if (result.error) {
       setError(result.error.message);
@@ -39,7 +43,9 @@ function LoginPage() {
     }
 
     if (!result.data.session) {
-      setMessage("Account created. Check your email to confirm the account, then sign in.");
+      setMessage(
+        "Account created. Check your email to confirm the account, then sign in.",
+      );
       setMode("signin");
       setBusy(false);
       return;
@@ -54,10 +60,16 @@ function LoginPage() {
     <main className="flex min-h-screen items-center justify-center bg-background px-4 py-10">
       <section className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-sm sm:p-8">
         <div className="mb-8">
-          <img src="/IP%20Shakti%20logo.png" alt="IP Shakti logo" className="mb-5 size-28 object-contain object-center" />
+          <img
+            src="/IP%20Shakti%20logo.png"
+            alt="IP Shakti logo"
+            className="mb-5 size-28 object-contain object-center"
+          />
           <p className="section-label">IP-SAKTI</p>
           <h1 className="mt-2 text-2xl font-bold text-foreground">
-            {mode === "signin" ? "Sign in to your workspace" : "Create your workspace account"}
+            {mode === "signin"
+              ? "Sign in to your workspace"
+              : "Create your workspace account"}
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Use the email and password configured in Supabase Authentication.
@@ -83,7 +95,9 @@ function LoginPage() {
             <input
               className="h-11 w-full rounded-lg border border-input bg-background px-3 text-sm outline-none focus:ring-2 focus:ring-ring"
               type="password"
-              autoComplete={mode === "signin" ? "current-password" : "new-password"}
+              autoComplete={
+                mode === "signin" ? "current-password" : "new-password"
+              }
               minLength={6}
               required
               value={password}
@@ -92,20 +106,34 @@ function LoginPage() {
             />
           </label>
 
-          {error && <p className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">{error}</p>}
-          {message && <p className="rounded-lg bg-success-soft p-3 text-sm text-success">{message}</p>}
+          {error && (
+            <p className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
+              {error}
+            </p>
+          )}
+          {message && (
+            <p className="rounded-lg bg-success-soft p-3 text-sm text-success">
+              {message}
+            </p>
+          )}
 
           <button
             className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
             type="submit"
             disabled={busy}
           >
-            {busy ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}
+            {busy
+              ? "Please wait…"
+              : mode === "signin"
+                ? "Sign in"
+                : "Create account"}
           </button>
         </form>
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
-          {mode === "signin" ? "Do not have an account?" : "Already have an account?"}{" "}
+          {mode === "signin"
+            ? "Do not have an account?"
+            : "Already have an account?"}{" "}
           <button
             type="button"
             className="font-semibold text-primary hover:underline"
@@ -118,7 +146,6 @@ function LoginPage() {
             {mode === "signin" ? "Create one" : "Sign in"}
           </button>
         </p>
-
       </section>
     </main>
   );

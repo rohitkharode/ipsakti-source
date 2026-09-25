@@ -7,7 +7,7 @@ export interface LLMConfig {
   timeoutMs: number;
 }
 
-const DEFAULT_MODEL = "openai/gpt-4o-mini";
+const DEFAULT_MODEL = "openrouter/free";
 const DEFAULT_TIMEOUT_MS = 30_000;
 
 export function getLLMConfig(): LLMConfig {
@@ -21,7 +21,10 @@ export function getLLMConfig(): LLMConfig {
     provider,
     model: process.env["LLM_MODEL"] || DEFAULT_MODEL,
     apiKey: process.env["OPENROUTER_API_KEY"] || undefined,
-    timeoutMs: Number.isFinite(timeoutMs) && timeoutMs > 0 ? timeoutMs : DEFAULT_TIMEOUT_MS,
+    timeoutMs:
+      Number.isFinite(timeoutMs) && timeoutMs > 0
+        ? timeoutMs
+        : DEFAULT_TIMEOUT_MS,
   };
 }
 

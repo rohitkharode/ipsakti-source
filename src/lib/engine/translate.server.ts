@@ -1,7 +1,6 @@
 import { generateText } from "@/lib/llm/provider.server";
 import type { LanguageCode, Product } from "@/types/domain";
 
-
 /**
  * TranslationService — provider abstraction.
  *
@@ -40,7 +39,8 @@ export function collectProtectedTerms(text: string): string[] {
   for (const pattern of PROTECTED_PATTERNS) {
     for (const match of text.matchAll(pattern)) terms.add(match[0]);
   }
-  for (const term of GLOSSARY) if (new RegExp(term, "i").test(text)) terms.add(term);
+  for (const term of GLOSSARY)
+    if (new RegExp(term, "i").test(text)) terms.add(term);
   return [...terms];
 }
 
@@ -54,9 +54,17 @@ export function detectLanguage(text: string): LanguageCode {
   return MARATHI_MARKERS.test(text) ? "mr" : "hi";
 }
 
-const LABEL: Record<LanguageCode, string> = { en: "English", hi: "Hindi", mr: "Marathi" };
+const LABEL: Record<LanguageCode, string> = {
+  en: "English",
+  hi: "Hindi",
+  mr: "Marathi",
+};
 
-async function translate(text: string, from: LanguageCode, to: LanguageCode): Promise<{ text: string; translated: boolean }> {
+async function translate(
+  text: string,
+  from: LanguageCode,
+  to: LanguageCode,
+): Promise<{ text: string; translated: boolean }> {
   const trimmed = text?.trim();
   if (!trimmed || from === to) return { text, translated: false };
   const protectedTerms = collectProtectedTerms(trimmed);
@@ -72,7 +80,9 @@ Rules:
   try {
     const out = await generateText({ system: instructions, user: trimmed });
     const result = out.trim();
-    return result ? { text: result, translated: true } : { text, translated: false };
+    return result
+      ? { text: result, translated: true }
+      : { text, translated: false };
   } catch (error) {
     console.error("TRANSLATION_FAILED", error);
     return { text, translated: false };
@@ -81,13 +91,25 @@ Rules:
 
 export const translationService = {
   detectLanguage,
-  translateToEnglish: (text: string, from: LanguageCode) => translate(text, from, "en"),
-  translateFromEnglish: (text: string, to: LanguageCode) => translate(text, "en", to),
+  translateToEnglish: (text: string, from: LanguageCode) =>
+    translate(text, from, "en"),
+  translateFromEnglish: (text: string, to: LanguageCode) =>
+    translate(text, "en", to),
   preserveTerminology: collectProtectedTerms,
 };
 
 /** Fields that carry free text and are safe to normalise into canonical English. */
-const TEXT_FIELDS: (keyof Product)[] = ["name", "type", "description", "intendedUse", "targetMarket", "preparation", "innovation", "traditionalReference", "dosageForm"];
+const TEXT_FIELDS: (keyof Product)[] = [
+  "name",
+  "type",
+  "description",
+  "intendedUse",
+  "targetMarket",
+  "preparation",
+  "innovation",
+  "traditionalReference",
+  "dosageForm",
+];
 
 export interface CanonicalProduct {
   product: Product;
@@ -100,10 +122,19 @@ export interface CanonicalProduct {
  * Produce the canonical English representation of a product submission.
  * Ingredient scientific names, quantities and identifiers are left untouched.
  */
-export async function canonicaliseProduct(product: Product, declared: LanguageCode = "en"): Promise<CanonicalProduct> {
-  const sample = [product.name, product.description, product.intendedUse, ...product.claims.map((c) => c.text)].join(" ");
+export async function canonicaliseProduct(
+  product: Product,
+  declared: LanguageCode = "en",
+): Promise<CanonicalProduct> {
+  const sample = [
+    product.name,
+    product.description,
+    product.intendedUse,
+    ...product.claims.map((c) => c.text),
+  ].join(" ");
   const detected = declared !== "en" ? declared : detectLanguage(sample);
-  if (detected === "en") return { product, detected, normalised: false, notes: [] };
+  if (detected === "en")
+    return { product, detected, normalised: false, notes: [] };
 
   const notes: string[] = [];
   const next: Product = { ...product };
@@ -119,7 +150,10 @@ export async function canonicaliseProduct(product: Product, declared: LanguageCo
 
   next.claims = await Promise.all(
     product.claims.map(async (claim) => {
-      const result = await translationService.translateToEnglish(claim.text, detected);
+      const result = await translationService.translateToEnglish(
+        claim.text,
+        detected,
+      );
       if (result.translated) anyTranslated = true;
       return { ...claim, text: result.text };
     }),
@@ -127,29 +161,56 @@ export async function canonicaliseProduct(product: Product, declared: LanguageCo
 
   next.ingredients = await Promise.all(
     product.ingredients.map(async (ingredient) => {
-      const result = await translationService.translateToEnglish(ingredient.commonName, detected);
+      const result = await translationService.translateToEnglish(
+        ingredient.commonName,
+        detected,
+      );
       if (result.translated) anyTranslated = true;
       // scientific name, quantity and supplier identifiers are preserved as submitted
       return { ...ingredient, commonName: result.text };
     }),
   );
 
-  if (!anyTranslated) notes.push("Input normalisation was unavailable, so the submission was assessed in its original language.");
+  if (!anyTranslated)
+    notes.push(
+      "Input normalisation was unavailable, so the submission was assessed in its original language.",
+    );
   return { product: next, detected, normalised: anyTranslated, notes };
 }
 
 /** Translate the user-facing narrative back into the submission language. */
-export async function localiseNarrative<T extends { summary: string; uncertainties: string[] }>(
+export async function localiseNarrative<
+  T extends { summary: string; uncertainties: string[] },
+>(
   narrative: T,
   missingInformation: string[],
   to: LanguageCode,
-): Promise<{ narrative: T; missingInformation: string[]; translated: boolean }> {
+): Promise<{
+  narrative: T;
+  missingInformation: string[];
+  translated: boolean;
+}> {
   if (to === "en") return { narrative, missingInformation, translated: false };
-  const summary = await translationService.translateFromEnglish(narrative.summary, to);
-  const uncertainties = await Promise.all(narrative.uncertainties.map((item) => translationService.translateFromEnglish(item, to)));
-  const missing = await Promise.all(missingInformation.map((item) => translationService.translateFromEnglish(item, to)));
+  const summary = await translationService.translateFromEnglish(
+    narrative.summary,
+    to,
+  );
+  const uncertainties = await Promise.all(
+    narrative.uncertainties.map((item) =>
+      translationService.translateFromEnglish(item, to),
+    ),
+  );
+  const missing = await Promise.all(
+    missingInformation.map((item) =>
+      translationService.translateFromEnglish(item, to),
+    ),
+  );
   return {
-    narrative: { ...narrative, summary: summary.text, uncertainties: uncertainties.map((u) => u.text) },
+    narrative: {
+      ...narrative,
+      summary: summary.text,
+      uncertainties: uncertainties.map((u) => u.text),
+    },
     missingInformation: missing.map((m) => m.text),
     translated: summary.translated,
   };

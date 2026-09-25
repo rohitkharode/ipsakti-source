@@ -42,5 +42,9 @@
       "preserve": []
     }
   ],
-  "metrics": ["intent_preservation", "retrieval_overlap_with_english_query", "identifier_preservation"]
+  "metrics": [
+    "intent_preservation",
+    "retrieval_overlap_with_english_query",
+    "identifier_preservation"
+  ]
 }
