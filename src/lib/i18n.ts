@@ -35,12 +35,15 @@ const dictionary = {
     "title.checklist": "Action Checklist",
     "title.evidenceDetail": "Evidence Detail",
     "settings.heading": "Interface and review",
-    "settings.languageHint": "Identifiers, scientific names, sections, and URLs remain unchanged.",
+    "settings.languageHint":
+      "Identifiers, scientific names, sections, and URLs remain unchanged.",
     "settings.uncertainty": "Show uncertainty labels",
-    "settings.uncertaintyHint": "Always show evidence gaps and human-review guidance.",
+    "settings.uncertaintyHint":
+      "Always show evidence gaps and human-review guidance.",
     "settings.save": "Save preferences",
     "settings.saved": "Preferences saved",
-    "settings.reasoning": "Assessments are reasoned in English and returned in your selected language. Official sources are always shown in their original language.",
+    "settings.reasoning":
+      "Assessments are reasoned in English and returned in your selected language. Official sources are always shown in their original language.",
   },
   hi: {
     "brand.tagline": "साक्ष्य इंटेलिजेंस",
@@ -65,12 +68,15 @@ const dictionary = {
     "title.checklist": "कार्य सूची",
     "title.evidenceDetail": "साक्ष्य विवरण",
     "settings.heading": "इंटरफ़ेस और समीक्षा",
-    "settings.languageHint": "पहचानकर्ता, वैज्ञानिक नाम, अनुभाग और URL अपरिवर्तित रहते हैं।",
+    "settings.languageHint":
+      "पहचानकर्ता, वैज्ञानिक नाम, अनुभाग और URL अपरिवर्तित रहते हैं।",
     "settings.uncertainty": "अनिश्चितता लेबल दिखाएँ",
-    "settings.uncertaintyHint": "साक्ष्य की कमी और विशेषज्ञ समीक्षा मार्गदर्शन हमेशा दिखाएँ।",
+    "settings.uncertaintyHint":
+      "साक्ष्य की कमी और विशेषज्ञ समीक्षा मार्गदर्शन हमेशा दिखाएँ।",
     "settings.save": "प्राथमिकताएँ सहेजें",
     "settings.saved": "प्राथमिकताएँ सहेजी गईं",
-    "settings.reasoning": "आकलन अंग्रेज़ी में किया जाता है और आपकी चुनी भाषा में लौटाया जाता है। आधिकारिक स्रोत हमेशा मूल भाषा में दिखाए जाते हैं।",
+    "settings.reasoning":
+      "आकलन अंग्रेज़ी में किया जाता है और आपकी चुनी भाषा में लौटाया जाता है। आधिकारिक स्रोत हमेशा मूल भाषा में दिखाए जाते हैं।",
   },
   mr: {
     "brand.tagline": "पुरावा इंटेलिजन्स",
@@ -95,17 +101,23 @@ const dictionary = {
     "title.checklist": "कृती यादी",
     "title.evidenceDetail": "पुरावा तपशील",
     "settings.heading": "इंटरफेस आणि पुनरावलोकन",
-    "settings.languageHint": "ओळखक्रमांक, शास्त्रीय नावे, कलमे आणि URL जसेच्या तसे राहतात.",
+    "settings.languageHint":
+      "ओळखक्रमांक, शास्त्रीय नावे, कलमे आणि URL जसेच्या तसे राहतात.",
     "settings.uncertainty": "अनिश्चितता लेबल दाखवा",
-    "settings.uncertaintyHint": "पुराव्यातील त्रुटी आणि तज्ज्ञ पुनरावलोकन मार्गदर्शन नेहमी दाखवा.",
+    "settings.uncertaintyHint":
+      "पुराव्यातील त्रुटी आणि तज्ज्ञ पुनरावलोकन मार्गदर्शन नेहमी दाखवा.",
     "settings.save": "प्राधान्ये जतन करा",
     "settings.saved": "प्राधान्ये जतन झाली",
-    "settings.reasoning": "मूल्यांकन इंग्रजीत केले जाते आणि तुमच्या भाषेत परत दिले जाते. अधिकृत स्रोत नेहमी मूळ भाषेत दाखवले जातात.",
+    "settings.reasoning":
+      "मूल्यांकन इंग्रजीत केले जाते आणि तुमच्या भाषेत परत दिले जाते. अधिकृत स्रोत नेहमी मूळ भाषेत दाखवले जातात.",
   },
 } as const;
 
 export type TranslationKey = keyof (typeof dictionary)["en"];
 
-export function translateKey(language: LanguageCode, key: TranslationKey): string {
+export function translateKey(
+  language: LanguageCode,
+  key: TranslationKey,
+): string {
   return dictionary[language]?.[key] ?? dictionary.en[key];
 }

@@ -5,5 +5,104 @@ import { Input } from "@/components/ui/input";
 import { PageHeader, Panel, OfficialLink } from "@/components/shared/ui";
 import { sourceService } from "@/services";
 
-export const Route = createFileRoute("/sources")({ head: () => ({ meta: [{ title: "Sources — IP-SAKTI" }, { name: "description", content: "Review indexed source authority, provenance, versions, and verification status." }, { property: "og:title", content: "Sources — IP-SAKTI" }, { property: "og:description", content: "Review source authority and provenance." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }), component: SourcesPage, loader: () => sourceService.list() });
-function SourcesPage() { const sources = Route.useLoaderData(); const [query, setQuery] = useState(""); const list = sources.filter((s) => `${s.name} ${s.publisher} ${s.topics.join(" ")}`.toLowerCase().includes(query.toLowerCase())); return <><PageHeader eyebrow="Provenance" title="Sources" description="Inspect the authority, version, verification date, and indexed evidence coverage of each source." /><label className="relative mb-6 block max-w-xl"><Search className="absolute left-3 top-3.5 size-4 text-muted-foreground" /><Input className="pl-9" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search sources and topics..." /></label><div className="grid gap-5 lg:grid-cols-2">{list.map((source) => <Panel key={source.id} className="p-6"><div className="flex items-start gap-4"><span className="grid size-11 shrink-0 place-items-center rounded-lg bg-muted text-primary"><Database className="size-5" /></span><div className="min-w-0"><div className="flex flex-wrap gap-2"><span className="rounded-full bg-info-soft px-2 py-1 text-xs font-semibold text-info">{source.authority}</span><span className="rounded-full bg-muted px-2 py-1 text-xs font-semibold">{source.type}</span></div><h2 className="mt-3 text-xl font-semibold">{source.name}</h2><p className="text-sm text-muted-foreground">{source.publisher}</p></div></div><dl className="my-5 grid grid-cols-2 gap-4 text-sm">{[["Jurisdiction", source.jurisdiction], ["Version", source.version], ["Effective", source.effectiveDate], ["Last verified", source.lastVerified], ["Evidence records", String(source.recordCount)], ["Source ID", source.id]].map(([k,v]) => <div key={k}><dt className="text-xs font-semibold uppercase text-muted-foreground">{k}</dt><dd className="mt-1">{v}</dd></div>)}</dl><div className="mb-5 flex flex-wrap gap-2">{source.topics.map((topic) => <span key={topic} className="rounded-md bg-muted px-2 py-1 text-xs">{topic}</span>)}</div><OfficialLink url={source.url} /></Panel>)}</div></>; }
+export const Route = createFileRoute("/sources")({
+  head: () => ({
+    meta: [
+      { title: "Sources — IP-SAKTI" },
+      {
+        name: "description",
+        content:
+          "Review indexed source authority, provenance, versions, and verification status.",
+      },
+      { property: "og:title", content: "Sources — IP-SAKTI" },
+      {
+        property: "og:description",
+        content: "Review source authority and provenance.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: SourcesPage,
+  loader: () => sourceService.list(),
+});
+function SourcesPage() {
+  const sources = Route.useLoaderData();
+  const [query, setQuery] = useState("");
+  const list = sources.filter((s) =>
+    `${s.name} ${s.publisher} ${s.topics.join(" ")}`
+      .toLowerCase()
+      .includes(query.toLowerCase()),
+  );
+  return (
+    <>
+      <PageHeader
+        eyebrow="Provenance"
+        title="Sources"
+        description="Inspect the authority, version, verification date, and indexed evidence coverage of each source."
+      />
+      <label className="relative mb-6 block max-w-xl">
+        <Search className="absolute left-3 top-3.5 size-4 text-muted-foreground" />
+        <Input
+          className="pl-9"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search sources and topics..."
+        />
+      </label>
+      <div className="grid gap-5 lg:grid-cols-2">
+        {list.map((source) => (
+          <Panel key={source.id} className="p-6">
+            <div className="flex items-start gap-4">
+              <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-muted text-primary">
+                <Database className="size-5" />
+              </span>
+              <div className="min-w-0">
+                <div className="flex flex-wrap gap-2">
+                  <span className="rounded-full bg-info-soft px-2 py-1 text-xs font-semibold text-info">
+                    {source.authority}
+                  </span>
+                  <span className="rounded-full bg-muted px-2 py-1 text-xs font-semibold">
+                    {source.type}
+                  </span>
+                </div>
+                <h2 className="mt-3 text-xl font-semibold">{source.name}</h2>
+                <p className="text-sm text-muted-foreground">
+                  {source.publisher}
+                </p>
+              </div>
+            </div>
+            <dl className="my-5 grid grid-cols-2 gap-4 text-sm">
+              {[
+                ["Jurisdiction", source.jurisdiction],
+                ["Version", source.version],
+                ["Effective", source.effectiveDate],
+                ["Last verified", source.lastVerified],
+                ["Evidence records", String(source.recordCount)],
+                ["Source ID", source.id],
+              ].map(([k, v]) => (
+                <div key={k}>
+                  <dt className="text-xs font-semibold uppercase text-muted-foreground">
+                    {k}
+                  </dt>
+                  <dd className="mt-1">{v}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="mb-5 flex flex-wrap gap-2">
+              {source.topics.map((topic) => (
+                <span
+                  key={topic}
+                  className="rounded-md bg-muted px-2 py-1 text-xs"
+                >
+                  {topic}
+                </span>
+              ))}
+            </div>
+            <OfficialLink url={source.url} />
+          </Panel>
+        ))}
+      </div>
+    </>
+  );
+}

@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { citationHasSupport } from "@/lib/engine/llm.server";
-import { detectPotentialConflicts, validateEvidence } from "@/lib/engine/validate.server";
+import {
+  detectPotentialConflicts,
+  validateEvidence,
+} from "@/lib/engine/validate.server";
 import type { Evidence } from "@/types/domain";
 
 function evidence(overrides: Partial<Evidence> = {}): Evidence {
@@ -23,8 +26,22 @@ function evidence(overrides: Partial<Evidence> = {}): Evidence {
     verified: false,
     evidenceQuality: "CURATED",
     verificationStatus: "curated_summary",
-    provenance: { sourceId: "SRC-TEST-1", documentId: "DOC-TEST-1", chunkId: "EVD-TEST-1", sourceName: "Test source", section: "Claims" },
-    retrieval: { lexicalScore: 0.9, semanticScore: 0, authorityScore: 1, jurisdictionMatch: true, fusedScore: 0.8, rerankScore: 0.8, why: "test" },
+    provenance: {
+      sourceId: "SRC-TEST-1",
+      documentId: "DOC-TEST-1",
+      chunkId: "EVD-TEST-1",
+      sourceName: "Test source",
+      section: "Claims",
+    },
+    retrieval: {
+      lexicalScore: 0.9,
+      semanticScore: 0,
+      authorityScore: 1,
+      jurisdictionMatch: true,
+      fusedScore: 0.8,
+      rerankScore: 0.8,
+      why: "test",
+    },
     ...overrides,
   };
 }
@@ -37,7 +54,10 @@ describe("Session 2 evidence validation", () => {
   });
 
   it("rejects evidence without complete provenance", () => {
-    const result = validateEvidence([evidence({ documentId: undefined, provenance: undefined })], ["IN"]);
+    const result = validateEvidence(
+      [evidence({ documentId: undefined, provenance: undefined })],
+      ["IN"],
+    );
     expect(result.rejected[0]?.evidence.validationStatus).toBe("INSUFFICIENT");
   });
 
@@ -47,21 +67,45 @@ describe("Session 2 evidence validation", () => {
   });
 
   it("does not flag compatible sources", () => {
-    expect(detectPotentialConflicts([evidence(), evidence({ id: "EVD-TEST-2", sourceId: "SRC-TEST-2", provision: "The claim is allowed when substantiated." })])).toHaveLength(0);
+    expect(
+      detectPotentialConflicts([
+        evidence(),
+        evidence({
+          id: "EVD-TEST-2",
+          sourceId: "SRC-TEST-2",
+          provision: "The claim is allowed when substantiated.",
+        }),
+      ]),
+    ).toHaveLength(0);
   });
 
   it("flags explicit incompatible requirement language", () => {
-    const result = detectPotentialConflicts([evidence(), evidence({ id: "EVD-TEST-2", sourceId: "SRC-TEST-2", provision: "The claim is not permitted under this pathway." })]);
+    const result = detectPotentialConflicts([
+      evidence(),
+      evidence({
+        id: "EVD-TEST-2",
+        sourceId: "SRC-TEST-2",
+        provision: "The claim is not permitted under this pathway.",
+      }),
+    ]);
     expect(result[0]).toContain("Potential conflict");
   });
 });
 
 describe("Session 2 citation guard", () => {
   it("accepts a citation with lexical claim/evidence alignment", () => {
-    expect(citationHasSupport("The claim is permitted when substantiated", [evidence()])).toBe(true);
+    expect(
+      citationHasSupport("The claim is permitted when substantiated", [
+        evidence(),
+      ]),
+    ).toBe(true);
   });
 
   it("rejects a citation with no meaningful alignment", () => {
-    expect(citationHasSupport("Quantum cryptography requires a satellite", [evidence()])).toBe(false);
+    expect(
+      citationHasSupport("Quantum cryptography requires a satellite", [
+        evidence(),
+      ]),
+    ).toBe(false);
   });
 });

@@ -1,37 +1,42 @@
-# Deployment and setup
+# Deployment and Setup
 
 ## Stack
 
-React 19, TypeScript, TanStack Start v1 (Vite 7), Tailwind v4, shadcn/ui, Lucide. Backend: Lovable Cloud (Postgres + pgvector + auth + storage + secrets). AI: Lovable AI Gateway.
+- **Frontend & Framework**: React 19, TypeScript, TanStack Start, Vite, Tailwind CSS, shadcn/ui, Lucide
+- **Datastore & Auth**: Supabase (PostgreSQL with pgvector extension, authentication, storage, row-level security)
+- **AI Integration**: OpenRouter server-side provider adapter
 
-## Local development
+## Local Development
 
+```bash
+npm install
+npm run dev        # http://localhost:8080
+npm run test       # unit test execution
+npm run build      # production build verification
 ```
-bun install
-bun run dev        # http://localhost:8080
-bunx tsgo --noEmit # type check
-```
 
-## Environment
+## Environment Variables
 
-Set as backend secrets, never in browser code:
+Configure these variables in your runtime environment or a local `.env` file (never commit real credentials):
 
-| variable | purpose |
-|---|---|
-| `LLM_PROVIDER` | LLM provider selector; currently `openrouter` |
-| `OPENROUTER_API_KEY` | Server-side OpenRouter key for grounded explanation and translation |
-| `LLM_MODEL` | OpenRouter model identifier; defaults centrally when omitted |
-| `LLM_TIMEOUT_MS` | Optional server-side provider timeout |
-| `SUPABASE_URL` | database URL (managed) |
-| `SUPABASE_SERVICE_ROLE_KEY` | server-side privileged access (managed) |
-| `SUPABASE_ANON_KEY` | public read access to the corpus (managed) |
-| `LOVABLE_CRON_SECRET` | protects scheduled endpoints, if Lovable preview infrastructure is used |
+| Variable                        | Description                                                         |
+| ------------------------------- | ------------------------------------------------------------------- |
+| `LLM_PROVIDER`                  | LLM provider selector (`openrouter`)                                |
+| `OPENROUTER_API_KEY`            | Server-side OpenRouter key for grounded explanation and translation |
+| `LLM_MODEL`                     | OpenRouter model identifier (defaults to `openrouter/free`)         |
+| `LLM_TIMEOUT_MS`                | Server-side provider timeout in milliseconds                        |
+| `OPENROUTER_SITE_URL`           | Application site URL for OpenRouter headers                         |
+| `SUPABASE_URL`                  | Supabase database project URL                                       |
+| `SUPABASE_PUBLISHABLE_KEY`      | Supabase publishable/anon key                                       |
+| `SUPABASE_SERVICE_ROLE_KEY`     | Supabase server-side privileged access key                          |
+| `VITE_SUPABASE_URL`             | Client-accessible Supabase project URL                              |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Client-accessible Supabase publishable key                          |
 
 Client-side configuration uses `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` only.
 
-## Database
+## Database Setup
 
-Schema and corpus seeds are applied as migrations. `reindexCorpus` backfills embeddings for any chunk without one.
+Schema and corpus seeds are applied via migrations in `supabase/migrations/`. `reindexCorpus` backfills embeddings for any chunk without one.
 
 ## Security
 

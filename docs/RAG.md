@@ -9,14 +9,14 @@
 - **Semantic** — optional `match_evidence(query_embedding, match_count)` vector search. No embedding provider is configured in the current migration, so BM25 is the active safe fallback.
 - **Rank fusion** — transparent weighted sum, stored per item so the UI can explain why an item was retrieved:
 
-  | signal | weight |
-  |---|---|
-  | lexical score | 0.30 |
-  | semantic score | 0.30 |
-  | authority level | 0.20 |
-  | jurisdiction match | 0.12 |
-  | topic match | 0.05 |
-  | currentness / version | 0.03 |
+  | signal                | weight |
+  | --------------------- | ------ |
+  | lexical score         | 0.30   |
+  | semantic score        | 0.30   |
+  | authority level       | 0.20   |
+  | jurisdiction match    | 0.12   |
+  | topic match           | 0.05   |
+  | currentness / version | 0.03   |
 
 - **Metadata filter** — jurisdiction and topic filters applied after fusion.
 - Reranking is deliberately not implemented; retrieval correctness and validation were prioritised.

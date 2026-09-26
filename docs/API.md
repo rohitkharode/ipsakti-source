@@ -2,18 +2,18 @@
 
 App-internal calls are TanStack server functions in `src/lib/api.functions.ts`, consumed through the service layer in `src/services/index.ts`. Every payload is validated server-side and every query is parameterised.
 
-| Server function | Input | Output |
-|---|---|---|
-| `createAnalysis` | `Product` + `language` | analysis id, case ref, status |
-| `getAnalysis` | analysis id | case, product snapshot, classification, evidence, routes, explanation, confidence, missing information, checklist, review, audit events |
-| `listCases` | search, filters, paging | case rows |
-| `listEvidence` | query, jurisdiction, source type, authority, topic | evidence rows |
-| `listEvidenceItem` | evidence id | evidence record with source metadata |
-| `listSources` | — | source registry |
-| `updateChecklistItem` | item id, status / owner / due date / notes | updated item |
-| `requestExpertReview` | analysis id, reason | review request |
-| `getOverviewStats` | — | counts for the overview screen |
-| `reindexCorpus` | — | embedding backfill result |
+| Server function       | Input                                              | Output                                                                                                                                  |
+| --------------------- | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `createAnalysis`      | `Product` + `language`                             | analysis id, case ref, status                                                                                                           |
+| `getAnalysis`         | analysis id                                        | case, product snapshot, classification, evidence, routes, explanation, confidence, missing information, checklist, review, audit events |
+| `listCases`           | search, filters, paging                            | case rows                                                                                                                               |
+| `listEvidence`        | query, jurisdiction, source type, authority, topic | evidence rows                                                                                                                           |
+| `listEvidenceItem`    | evidence id                                        | evidence record with source metadata                                                                                                    |
+| `listSources`         | —                                                  | source registry                                                                                                                         |
+| `updateChecklistItem` | item id, status / owner / due date / notes         | updated item                                                                                                                            |
+| `requestExpertReview` | analysis id, reason                                | review request                                                                                                                          |
+| `getOverviewStats`    | —                                                  | counts for the overview screen                                                                                                          |
+| `reindexCorpus`       | —                                                  | embedding backfill result                                                                                                               |
 
 ## Service abstraction
 

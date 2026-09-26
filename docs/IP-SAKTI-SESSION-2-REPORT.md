@@ -95,7 +95,7 @@ Preserved PostgreSQL full-text search through `bm25_evidence()`.
 
 ### Vector retrieval
 
-Preserved Lovable embedding generation and pgvector similarity search. Missing/unavailable embedding configuration still falls back to lexical retrieval.
+Preserved embedding vector retrieval and pgvector similarity search. Missing/unavailable embedding configuration still falls back to lexical retrieval.
 
 ### Hybrid retrieval
 
@@ -187,34 +187,34 @@ This is a deterministic first layer; it is not a complete semantic entailment sy
 
 ## 10. Data Provenance
 
-| State | Meaning | Current corpus use |
-|---|---|---|
-| `VERIFIED` | Passage and source have been independently verified | Supported for future ingestion; not used by current seed rows |
-| `CURATED` | Authored/curated prototype evidence linked to a source reference | Existing migration seed rows |
-| `SYNTHETIC` | Test-only or generated fixture | Test fixtures |
-| `UNKNOWN` | Quality cannot be established | Default for new unclassified records |
+| State       | Meaning                                                          | Current corpus use                                            |
+| ----------- | ---------------------------------------------------------------- | ------------------------------------------------------------- |
+| `VERIFIED`  | Passage and source have been independently verified              | Supported for future ingestion; not used by current seed rows |
+| `CURATED`   | Authored/curated prototype evidence linked to a source reference | Existing migration seed rows                                  |
+| `SYNTHETIC` | Test-only or generated fixture                                   | Test fixtures                                                 |
+| `UNKNOWN`   | Quality cannot be established                                    | Default for new unclassified records                          |
 
 The existing 11 sources, 11 documents and 16 evidence chunks are curated prototype content. No live source ingestion or independent document verification was performed in this session.
 
 ## 11. Tests
 
-| Category | Result |
-|---|---|
-| Session 1 ownership and market regression tests | PASS — 16 tests |
-| Provenance validation | PASS |
-| Wrong-jurisdiction rejection | PASS |
-| Curated evidence quality handling | PASS |
-| Compatible evidence conflict check | PASS |
-| Incompatible requirement conflict check | PASS |
-| Citation alignment guard | PASS |
-| Full Vitest suite | PASS — 2 files, 23 tests |
-| TypeScript check (`npx.cmd tsc --noEmit`) | PASS |
-| Production build (`npm.cmd run build`) | PASS, with existing deprecation/chunk-size warnings |
-| Repository lint (`npm.cmd run lint`) | FAIL — 1,788 auto-fixable formatting errors, mostly existing compressed formatting across the repository |
-| Live Supabase retrieval/migration test | NOT EXECUTED — configured remote database required |
-| Live LLM/embedding test | NOT EXECUTED — no external provider key was configured |
-| Browser end-to-end evidence flow | NOT EXECUTED — no authenticated runtime/database session configured |
-| Performance measurements | NOT EXECUTED |
+| Category                                        | Result                                                                                                   |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Session 1 ownership and market regression tests | PASS — 16 tests                                                                                          |
+| Provenance validation                           | PASS                                                                                                     |
+| Wrong-jurisdiction rejection                    | PASS                                                                                                     |
+| Curated evidence quality handling               | PASS                                                                                                     |
+| Compatible evidence conflict check              | PASS                                                                                                     |
+| Incompatible requirement conflict check         | PASS                                                                                                     |
+| Citation alignment guard                        | PASS                                                                                                     |
+| Full Vitest suite                               | PASS — 2 files, 23 tests                                                                                 |
+| TypeScript check (`npx.cmd tsc --noEmit`)       | PASS                                                                                                     |
+| Production build (`npm.cmd run build`)          | PASS, with existing deprecation/chunk-size warnings                                                      |
+| Repository lint (`npm.cmd run lint`)            | FAIL — 1,788 auto-fixable formatting errors, mostly existing compressed formatting across the repository |
+| Live Supabase retrieval/migration test          | NOT EXECUTED — configured remote database required                                                       |
+| Live LLM/embedding test                         | NOT EXECUTED — no external provider key was configured                                                   |
+| Browser end-to-end evidence flow                | NOT EXECUTED — no authenticated runtime/database session configured                                      |
+| Performance measurements                        | NOT EXECUTED                                                                                             |
 
 ## 12. Known Limitations
 

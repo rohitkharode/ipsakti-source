@@ -1,6 +1,6 @@
 # Data model
 
-TypeScript contracts live in `src/types/domain.ts`. Tables live in Lovable Cloud Postgres.
+TypeScript contracts live in `src/types/domain.ts`. Tables live in Supabase PostgreSQL.
 
 ## Corpus tables
 
