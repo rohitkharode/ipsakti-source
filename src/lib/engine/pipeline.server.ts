@@ -36,14 +36,12 @@ async function audit(
   eventType: string,
   detail: Record<string, unknown> = {},
 ) {
-  await supabaseAdmin
-    .from("audit_events")
-    .insert({
-      case_id: caseId,
-      analysis_id: analysisId,
-      event_type: eventType,
-      detail: detail as never,
-    });
+  await supabaseAdmin.from("audit_events").insert({
+    case_id: caseId,
+    analysis_id: analysisId,
+    event_type: eventType,
+    detail: detail as never,
+  });
 }
 
 export async function runAnalysis(

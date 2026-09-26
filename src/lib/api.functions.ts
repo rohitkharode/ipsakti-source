@@ -467,14 +467,12 @@ export const requestExpertReview = createServerFn({ method: "POST" })
       .from("cases")
       .update({ status: "review" })
       .eq("id", analysis.case_id);
-    await supabaseAdmin
-      .from("audit_events")
-      .insert({
-        case_id: analysis.case_id,
-        analysis_id: analysis.id,
-        event_type: "review_requested",
-        detail: { note: data.note },
-      });
+    await supabaseAdmin.from("audit_events").insert({
+      case_id: analysis.case_id,
+      analysis_id: analysis.id,
+      event_type: "review_requested",
+      detail: { note: data.note },
+    });
     return { ok: true };
   });
 
