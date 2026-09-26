@@ -12,10 +12,6 @@ export class AppError extends Error {
   }
 }
 
-export function failure(
-  code: ErrorCode,
-  message: string,
-  recoverable = true,
-): FailureState {
+export function failure(code: ErrorCode, message: string, recoverable = true): FailureState {
   return { code, message, recoverable };
 }

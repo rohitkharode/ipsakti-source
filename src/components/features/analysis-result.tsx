@@ -1,12 +1,10 @@
 import {
   BookOpenText,
   ChevronRight,
-  CircleAlert,
   ExternalLink,
   FileCheck2,
   Landmark,
   Scale,
-  ShieldCheck,
 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
@@ -130,18 +128,6 @@ export function AnalysisResult({ data }: { data: Analysis }) {
           </div>
         </div>
       </Panel>
-      {data.failureStates?.length ? (
-        <Panel className="border-warning/30 bg-warning-soft p-5">
-          <h2 className="font-semibold">Analysis status</h2>
-          <ul className="mt-2 space-y-1 text-sm">
-            {data.failureStates.map((item) => (
-              <li key={item.code}>
-                <strong>{item.code}</strong>: {item.message}
-              </li>
-            ))}
-          </ul>
-        </Panel>
-      ) : null}
       <section>
         <div className="mb-4">
           <p className="section-label">System assessment</p>

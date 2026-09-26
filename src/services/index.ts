@@ -18,8 +18,7 @@ import type { Analysis, Product, Status } from "@/types/domain";
  */
 export const analysisService = {
   get: (id: string) => getAnalysis({ data: { id } }),
-  create: (product: Product) =>
-    createAnalysis({ data: product as never }) as Promise<Analysis>,
+  create: (product: Product) => createAnalysis({ data: product as never }) as Promise<Analysis>,
   stats: () => getOverviewStats(),
 };
 
@@ -35,16 +34,13 @@ export const caseService = {
 
 export const sourceService = {
   list: () => listSources(),
-  get: async (id: string) =>
-    (await listSources()).find((item) => item.id === id) ?? null,
+  get: async (id: string) => (await listSources()).find((item) => item.id === id) ?? null,
 };
 
 export const checklistService = {
-  update: (id: string, status: Status, analysisRef: string) =>
-    updateChecklistItem({ data: { id, status, analysisRef } }),
+  update: (id: string, status: Status, analysisRef: string) => updateChecklistItem({ data: { id, status, analysisRef } }),
 };
 
 export const reviewService = {
-  request: (analysisRef: string, note = "") =>
-    requestExpertReview({ data: { analysisRef, note } }),
+  request: (analysisRef: string, note = "") => requestExpertReview({ data: { analysisRef, note } }),
 };

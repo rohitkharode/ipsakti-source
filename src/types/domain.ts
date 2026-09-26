@@ -1,13 +1,10 @@
-export type Status =
-  "complete" | "processing" | "pending" | "failed" | "review";
+export type Status = "complete" | "processing" | "pending" | "failed" | "review";
 
 export type LanguageCode = "en" | "hi" | "mr";
 export type MarketCode = "IN" | "EU" | "US" | "ASEAN" | "GLOBAL";
-export type InformationStatus =
-  "provided" | "not_provided" | "unknown" | "not_applicable";
+export type InformationStatus = "provided" | "not_provided" | "unknown" | "not_applicable";
 export type EvidenceQuality = "VERIFIED" | "CURATED" | "SYNTHETIC" | "UNKNOWN";
-export type EvidenceValidationStatus =
-  "VALID" | "PARTIAL" | "INSUFFICIENT" | "UNVERIFIED" | "CONFLICTING";
+export type EvidenceValidationStatus = "VALID" | "PARTIAL" | "INSUFFICIENT" | "UNVERIFIED" | "CONFLICTING";
 
 export interface ApplicantInfo {
   name?: string;
